@@ -1,16 +1,11 @@
-/*
 import 'mocha';
 import {expect} from 'chai';
-import {nombreFuncion} from '../src/ejercicio-1';
+import {prueba} from '../src/ejercicio-1/ejercicio-1';
 
-describe('Ejercicio 1', () => {
-    it('nombreFuncion(argumentos) returns valor', () => {
-      expect(nombreFuncion(argumentos)).to.be.deep.equal(valor);
+describe('Pruebas funcionamiento tests', ()=> {
+  describe('Prueba funcion', ()=> {
+    it('expect(prueba()) return hola', ()=>{
+      expect(prueba()).to.be.equal("hola");
     });
-    
-    it('nombreFuncion(argumentos) returns valor', () => {
-      expect(nombreFuncion(argumentos)).to.be.deep.equal(valor);
-    });
-
+  });
 });
-*/
