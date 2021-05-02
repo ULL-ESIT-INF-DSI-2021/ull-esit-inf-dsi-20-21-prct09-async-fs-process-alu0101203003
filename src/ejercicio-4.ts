@@ -78,8 +78,10 @@ import * as fs from 'fs';
     if (!existeRuta(ruta)){
         console.log(chalk.red("Error. La ruta especificada no existe"));
     } else {
-        fs.rm(`${ruta}`, () => {
-            console.log(chalk.green('Archivo eliminado con éxito'));
+        var childRm = spawn('sh', [`-c`,`rm -rf ${ruta}`]);
+        
+        childRm.on('close', () => {
+            console.log(chalk.green(`Archivo en la ruta ${ruta} borrado con éxito`));
         });
     }  
   }
