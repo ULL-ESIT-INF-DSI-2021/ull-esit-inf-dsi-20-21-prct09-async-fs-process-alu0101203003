@@ -412,3 +412,25 @@ Consola:
 ---------------
 
 */
+
+/* 
+
+Teniendo en cuenta que el fichero se modifica 2 veces, se repetiran las iteraciones 14 y 15 dos veces. La salida
+de consola acaba así:
+
+- Starting to watch file ${filename}
+- File ${filename} is no longer watched
+- File ${filename} has been modified somehow
+- File ${filename} has been modified somehow
+
+*/
+
+/* 
+
+La funcion access nos permitirá acceder al fichero y, por lo tanto, comprobar si existe, si se tienen permisos para acceder 
+y manejar los posibles errores de este acceso.
+
+Las constantes (constants) nos servirán para manipular el archivo teniendo en cuenta sus parámetros dentro de la llamada
+a la función access.
+
+*/
