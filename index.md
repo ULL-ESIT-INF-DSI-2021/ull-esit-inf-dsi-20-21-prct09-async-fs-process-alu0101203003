@@ -47,12 +47,13 @@ Para poder resolver este ejercicio nos serán de utilidad ciertas herramientas d
 
 **Enunciado:**
 
+Realice una traza de ejecución de este programa mostrando, paso a paso, el contenido de la pila de llamadas, el registro de eventos de la API y la cola de manejadores de Node.js, además de lo que se muestra por la consola. Para ello, simule que se llevan a cabo, como mínimo, dos modificaciones del fichero helloworld.txt a lo largo de la ejecución del programa anterior. ¿Qué hace la función access? ¿Para qué sirve el objeto constants?
+
 **Resolución:**
 
+El ejercicio fue estudiado y ejecutado para comprender su funcionamiento. A esto ayudaron recursos como el [proporcionado](https://dev.to/lydiahallie/javascript-visualized-event-loop-3dif) en el guión de la práctica así como un [video de youtube](https://www.youtube.com/watch?v=pt2oW_B4FkU) donde se explican la pila, registro de eventos y cola de manejadores.
 
-```ts
-```
-
+La traza completa se encuentra en el [código fuente del ejercicio 1](https://github.com/ULL-ESIT-INF-DSI-2021/ull-esit-inf-dsi-20-21-prct09-async-fs-process-alu0101203003/blob/master/src/ejercicio-1.ts)
 
 #### 2.2 Ejercicio 2
 
