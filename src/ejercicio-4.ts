@@ -40,12 +40,11 @@ import * as fs from 'fs';
   }
 
 /**
- * Funcion crearDirectorio.
- * Permite crear un nuevo directorio en la ruta indicada.
- * @param ruta destino
- * @param nombreDir nombre del directorio
+ * Funcion mostrarFicheros.
+ * Permite mostrar los ficheros del directorio en la ruta indicada.
+ * @param ruta del directorio
  */
- function mostrarContenido (directorio :string) {
+ function mostrarFicheros (directorio :string) {
     if (!existeRuta(directorio)){
         console.log(chalk.red("Error. La ruta especificada no existe"));
     } else {
@@ -53,6 +52,21 @@ import * as fs from 'fs';
         
         childLs.stdout.pipe(process.stdout)
     }  
+  }
+
+/**
+ * Funcion mostrarContenido.
+ * Permite el contenido de un fichero de texto.
+ * @param ruta del directorio
+ */
+ function mostrarContenido (fichero :string) {
+    if (!existeRuta(fichero)){
+        console.log(chalk.red("Error. El fichero especificado no existe"));
+    } else {
+        var childCat = spawn('cat', [`${fichero}`]);
+        
+        childCat.stdout.pipe(process.stdout)
+    }
   }
 
   /**
@@ -137,14 +151,38 @@ import * as fs from 'fs';
 
 /**
  * Comando ls.
- * Muestra el contenido del directorio en la ruta indicada.
+ * Muestra los ficheros del directorio en la ruta indicada.
  */
  yargs.command({
     command: 'ls',
+    describe: 'Muestra los ficheros del directorio en la ruta indicada',
+    builder: {
+      ruta: {
+        describe: 'Ruta del directorio cuyos ficheros se desean mostrar',
+        demandOption: true,
+        type: 'string',
+      },
+    },
+    handler(argv) {
+      if (typeof argv.ruta === 'string') {
+        mostrarFicheros(argv.ruta);
+  
+      } else {
+        console.log(chalk.red("Error. Comando mal especificado"));
+      }
+    },
+  });
+
+/**
+ * Comando cat.
+ * Muestra el contenido del fichero en la ruta indicada.
+ */
+ yargs.command({
+    command: 'cat',
     describe: 'Muestra el contenido del directorio en la ruta indicada',
     builder: {
       ruta: {
-        describe: 'Ruta del directorio cuyo contenido se desea mostrar',
+        describe: 'Ruta del fichero cuyo contenido se desea mostrar',
         demandOption: true,
         type: 'string',
       },
