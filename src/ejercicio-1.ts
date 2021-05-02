@@ -221,29 +221,7 @@ Consola:
 
 ---------------
 
-* IT9: watch no es un elemento de JavaScript ni de V8, por lo tanto pasa directamente a los registros de API:
----------------
-
-Pila de llamadas:
-
--manejador access
--main
-
-Registro de eventos:
-
--watch(process.argv[2])
-
-Cola de manejadores:
-
--
-
-Consola:
-
-- Starting to watch file ${filename}
-
----------------
-
-* IT10: watch sale del registro de eventos:
+* IT9: Se ejecuta el watch:
 ---------------
 
 Pila de llamadas:
@@ -265,7 +243,7 @@ Consola:
 
 ---------------
 
-* IT11: watcher.on entra en la pila de llamadas:
+* IT10: watcher.on entra en la pila de llamadas:
 ---------------
 
 Pila de llamadas:
@@ -288,7 +266,7 @@ Consola:
 
 ---------------
 
-* IT12: watcher.on se ejecuta pasando al registro de evento
+* IT11: watcher.on se ejecuta pasando al registro de evento
 ---------------
 
 Pila de llamadas:
@@ -310,7 +288,30 @@ Consola:
 
 ---------------
 
-* IT13: watcher.on se mantiene en ejecución y sigue el flujo
+* IT12: watcher.on se mantiene en ejecución y sigue el flujo. Llega el siguiente console.log a la pila de llamadas
+---------------
+
+Pila de llamadas:
+
+-console.log(`File ${filename} is no longer watched`);
+-manejador access
+-main
+
+Registro de eventos:
+
+-watcher.on('change')
+
+Cola de manejadores:
+
+-
+
+Consola:
+
+- Starting to watch file ${filename}
+
+---------------
+
+* IT13: Se ejecuta el console.log reflejando el resultado en la salida
 ---------------
 
 Pila de llamadas:
@@ -329,8 +330,85 @@ Cola de manejadores:
 Consola:
 
 - Starting to watch file ${filename}
+- File ${filename} is no longer watched
 
 ---------------
 
+{ 
+  Hasta aquí se habría completado el flujo mínimo del programa.
+  A partir de ahora se evaluará el caso de modificación donde
+  entrará en juego el watcher.on change y su correspondiente flujo
+}
+
+* IT14: Cuando el fichero se modifica entramos en el evento correspondiente y se añade el console.log a la pila
+---------------
+
+Pila de llamadas:
+
+-console.log(`File ${filename} has been modified somehow`);
+-manejador access
+-main
+
+Registro de eventos:
+
+-watcher.on('change')
+
+Cola de manejadores:
+
+-
+
+Consola:
+
+- Starting to watch file ${filename}
+- File ${filename} is no longer watched
+
+---------------
+
+* IT15: Se ejecuta el console.log y se muestra por pantalla
+---------------
+
+Pila de llamadas:
+
+-manejador access
+-main
+
+Registro de eventos:
+
+-watcher.on('change')
+
+Cola de manejadores:
+
+-
+
+Consola:
+
+- Starting to watch file ${filename}
+- File ${filename} is no longer watched
+- File ${filename} has been modified somehow
+
+---------------
+
+* IT16: Se repetirá este bucle  con las iteraciones 14 y 15 cada vez que se realice un cambio en el fichero vigilado. Una vez cerrado el programa, watcher.on('change') saldrá del registro de eventos y finalizará el flujo (saldrá también el manejador de access y main).
+---------------
+
+Pila de llamadas:
+
+-
+
+Registro de eventos:
+
+-
+
+Cola de manejadores:
+
+-
+
+Consola:
+
+- Starting to watch file ${filename}
+- File ${filename} is no longer watched
+- File ${filename} has been modified somehow
+
+---------------
 
 */
