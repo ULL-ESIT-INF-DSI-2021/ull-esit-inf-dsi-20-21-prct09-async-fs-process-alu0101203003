@@ -1,5 +1,5 @@
 import * as yargs from 'yargs';
-import { Usuario } from '../aplicacion/usuario';
+import { Usuario } from '../ejercicio-3/usuario';
 const chalk=require('chalk')
 
 /**
