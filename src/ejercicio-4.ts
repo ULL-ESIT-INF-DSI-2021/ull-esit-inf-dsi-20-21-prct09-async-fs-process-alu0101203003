@@ -86,6 +86,39 @@ import * as fs from 'fs';
     }  
   }
 
+/**
+ * Funcion moverArchivos.
+ * Permite mover o copiar ficheros y directorios,
+ * @param rutaOrigen archivo a mover
+ * @param rutaDestino ruta a donde se quiere mover
+ */
+ function moverArchivos (rutaOrigen :string, rutaDestino :string, opt :string) {
+    if (!existeRuta(rutaOrigen)){
+      console.log(chalk.red("Error. La ruta especificada no existe"));
+    }
+    if (!existeRuta(rutaOrigen)){
+        console.log(chalk.red("Error. La ruta especificada no existe"));
+    } else {
+      if (opt == "cp"){
+        // Manejar la opción de que sea un directorio
+        var childCp = spawn(`[ -d "${rutaOrigen}" ] && cp ${rutaOrigen} ${rutaDestino} || cp -r ${rutaOrigen} ${rutaDestino}`, {
+          shell: true
+        });
+        
+        childCp.on('close', () => {
+            console.log(chalk.green(`Archivo copiado con éxito`));
+        });
+      }
+      if (opt == "mv"){
+        var childMv = spawn('sh', [`-c`,`mv ${rutaOrigen} ${rutaDestino}`]);
+        
+        childMv.on('close', () => {
+            console.log(chalk.green(`Archivo movido con éxito`));
+        });
+      }
+    }  
+  }
+
   /**
   * Función existeRuta.
   * Permite comprobar si la ruta existe
@@ -214,7 +247,7 @@ import * as fs from 'fs';
     },
   });
 
-  /**
+/**
  * Comando rm.
  * Borra el archivo en la ruta indicada.
  */
@@ -238,4 +271,37 @@ import * as fs from 'fs';
     },
   });
 
+/**
+ * Comando move.
+ * Mueve o copia archivos de una ruta de origen a una de destino.
+ */
+ yargs.command({
+  command: 'move',
+  describe: 'Mueve o copia archivos de una ruta de origen a una de destino',
+  builder: {
+    origen: {
+      describe: 'Ruta origen del archivo',
+      demandOption: true,
+      type: 'string',
+    },
+    destino: {
+      describe: 'Ruta destino del archivo',
+      demandOption: true,
+      type: 'string',
+    },
+    opt: {
+      describe: 'Opción para indicar si se desea copiar o mover',
+      demandOption: true,
+      type: 'string',
+    },
+  },
+  handler(argv) {
+    if (typeof argv.origen === 'string' && typeof argv.destino === 'string' && typeof argv.opt === 'string' ) {
+      moverArchivos(argv.origen, argv.destino, argv.opt);
+
+    } else {
+      console.log(chalk.red("Error. Comando mal especificado"));
+    }
+  },
+});
   yargs.argv;
