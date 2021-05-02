@@ -69,6 +69,21 @@ import * as fs from 'fs';
     }
   }
 
+/**
+ * Funcion borrarArchivos.
+ * Permite borrar ficheros y directorios
+ * @param ruta archivo
+ */
+ function borrarArchivos (ruta :string) {
+    if (!existeRuta(ruta)){
+        console.log(chalk.red("Error. La ruta especificada no existe"));
+    } else {
+        fs.rm(`${ruta}`, () => {
+            console.log(chalk.green('Archivo eliminado con éxito'));
+        });
+    }  
+  }
+
   /**
   * Función existeRuta.
   * Permite comprobar si la ruta existe
@@ -190,6 +205,30 @@ import * as fs from 'fs';
     handler(argv) {
       if (typeof argv.ruta === 'string') {
         mostrarContenido(argv.ruta);
+  
+      } else {
+        console.log(chalk.red("Error. Comando mal especificado"));
+      }
+    },
+  });
+
+  /**
+ * Comando rm.
+ * Borra el archivo en la ruta indicada.
+ */
+ yargs.command({
+    command: 'rm',
+    describe: 'Borra el archivo en la ruta indicada',
+    builder: {
+      ruta: {
+        describe: 'Ruta del fichero que se desea borrar',
+        demandOption: true,
+        type: 'string',
+      },
+    },
+    handler(argv) {
+      if (typeof argv.ruta === 'string') {
+        borrarArchivos(argv.ruta);
   
       } else {
         console.log(chalk.red("Error. Comando mal especificado"));
