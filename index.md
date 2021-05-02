@@ -216,7 +216,7 @@ function watchNotas (nombre :string, directorio :string) {
 ```
 Este método será llamado con su respectivo comando mostrando la siguiente salida:
 
-<img src="img/3.PNG" alt=""/>
+<img src="img/4.PNG" alt=""/>
 
 #### 2.4 Ejercicio 4
 
